@@ -13,6 +13,9 @@ public enum CodeEnum {
     FAIL(40000,"失败"),
     INTERNAL_SERVER_ERROR(50000,"服务器内部错误");
 
+    //用户模块
+
+
 
     /**
      * 响应状态码

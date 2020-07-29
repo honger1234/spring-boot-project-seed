@@ -20,7 +20,6 @@ import lombok.experimental.Accessors;
  * </p>
  *
  * @author zt
- * @since 2020-07-28
  */
 @Data
 @EqualsAndHashCode(callSuper = false)
@@ -31,15 +30,16 @@ public class Employee implements Serializable {
 
     private static final long serialVersionUID=1L;
 
-      @TableId(value = "id", type = IdType.AUTO)
+    @TableId(value = "id", type = IdType.AUTO)
+    @ApiModelProperty(value = "ID")
     private Integer id;
-
+    @ApiModelProperty(value = "用户名")
     private String lastName;
-
+    @ApiModelProperty(value = "邮箱")
     private String email;
-
+    @ApiModelProperty(value = "性别")
     private String gender;
-
+    @ApiModelProperty(value = "年龄")
     private Integer age;
 
     @ApiModelProperty(value = "创建时间")

@@ -8,6 +8,8 @@ import com.honger1234.springbootprojectseed.entity.Employee;
 import com.honger1234.springbootprojectseed.entity.Result;
 import com.honger1234.springbootprojectseed.service.IEmployeeService;
 import com.honger1234.springbootprojectseed.util.ResultGenerator;
+import io.swagger.annotations.Api;
+import io.swagger.annotations.ApiOperation;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
@@ -27,11 +29,13 @@ import java.util.List;
  */
 @RestController
 @RequestMapping("/employee")
+@Api(tags = "员工模块")
 public class EmployeeController {
 
     @Resource
     private IEmployeeService employeeService;
 
+    @ApiOperation(value = "分页查询", notes = "分页查询")
     @GetMapping("/list")
     public Result list(){
         Page<Employee> page=new Page<>(1,5);

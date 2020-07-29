@@ -14,10 +14,7 @@ public class ResultGenerator {
      * @return
      */
     public static Result genSuccessResult() {
-        Result result = new Result();
-        result.setCode(CodeEnum.SUCCESS.getCode());
-        result.setMsg(CodeEnum.SUCCESS.getMsg());
-        return result;
+        return new Result<>(CodeEnum.SUCCESS);
     }
 
     /**
@@ -27,31 +24,27 @@ public class ResultGenerator {
      * @return
      */
     public static <T> Result<T> genSuccessResult(T data) {
-        Result result = new Result();
-        result.setCode(CodeEnum.SUCCESS.getCode());
-        result.setMsg(CodeEnum.SUCCESS.getMsg());
-        result.setData(data);
-        return result;
+        return new Result<>(CodeEnum.SUCCESS,data);
     }
 
     /**
      * 操作失败，默认提示信息
      * @return
      */
-    public static Result genFailResult() {
-        Result result = new Result();
-        result.setCode(CodeEnum.FAIL.getCode());
-        result.setMsg(CodeEnum.FAIL.getMsg());
-        return result;
-    }
+//    public static <T> Result<T> genFailResult() {
+//        Result<T> result = new Result<T>();
+//        result.setCode(CodeEnum.FAIL.getCode());
+//        result.setMsg(CodeEnum.FAIL.getMsg());
+//        return result;
+//    }
 
     /**
      * 操作失败，自定义失败提示信息
      * @param message
      * @return
      */
-    public static Result genFailResult(String message) {
-        Result result = new Result();
+    public static <T> Result<T> genFailResult(String message) {
+        Result<T> result = new Result<T>();
         result.setCode(CodeEnum.FAIL.getCode());
         result.setMsg(message);
         return result;
@@ -61,10 +54,41 @@ public class ResultGenerator {
      * 内部服务器错误
      * @return
      */
-    public static Result genErrorResult(){
+    public static Result genErrorResult(String msg){
+        Result result = new Result(CodeEnum.INTERNAL_SERVER_ERROR);
+        result.setMsg(msg);
+        return result;
+    }
+
+    /**
+     * 404错误
+     * @return
+     */
+    public static Result gen404NotFoundResult(){
+        return new Result(CodeEnum.NOT_FOUND);
+    }
+
+    /**
+     * 404错误，自定义错误信息
+     * @param msg
+     * @return
+     */
+    public static Result gen404NotFoundResult(String msg){
         Result result = new Result();
-        result.setCode(CodeEnum.INTERNAL_SERVER_ERROR.getCode());
-        result.setMsg(CodeEnum.INTERNAL_SERVER_ERROR.getMsg());
+        result.setCode(CodeEnum.NOT_FOUND.getCode());
+        result.setMsg(msg);
+        return result;
+    }
+
+    /**
+     * 接口认证失败
+     * @param msg
+     * @return
+     */
+    public static Result genUnauthorizedResult(String msg){
+        Result result = new Result();
+        result.setCode(CodeEnum.UNAUTHORIZED.getCode());
+        result.setMsg(msg);
         return result;
     }
 }

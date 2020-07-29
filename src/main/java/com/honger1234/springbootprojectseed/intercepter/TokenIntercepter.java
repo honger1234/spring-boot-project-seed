@@ -1,5 +1,6 @@
 package com.honger1234.springbootprojectseed.intercepter;
 
+import com.honger1234.springbootprojectseed.exception.TokenException;
 import com.honger1234.springbootprojectseed.util.JWTUtil;
 import org.springframework.util.StringUtils;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -15,12 +16,12 @@ public class TokenIntercepter implements HandlerInterceptor {
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler) throws Exception {
         String token = request.getHeader("token");
         if (StringUtils.isEmpty(token)){
-            return false;
+            throw new TokenException("token不能为空");
         }
         //验证是否过期
         boolean expired = JWTUtil.isExpired(token);
         if (expired){
-            return false;
+            throw new TokenException("token已过期");
         }
         return true;
     }

@@ -13,4 +13,19 @@ public class Result<T> {
     private String msg;
 
     private T data;
+
+    public Result(){
+        super();
+    }
+
+    public Result(CodeEnum codeEnum,T data){
+        this.code=codeEnum.getCode();
+        this.msg=codeEnum.getMsg();
+        this.data=data;
+    }
+
+    public Result(CodeEnum codeEnum){
+        this.code=codeEnum.getCode();
+        this.msg=codeEnum.getMsg();
+    }
 }

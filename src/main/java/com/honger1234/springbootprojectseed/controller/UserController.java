@@ -33,7 +33,7 @@ public class UserController {
             //生成token
             String token= JWTUtil.generate("222",username);
             Claims claim = JWTUtil.getClaim(token);
-            return ResultGenerator.genSuccessResult(claim);
+            return ResultGenerator.genSuccessResult(token);
         }
             return ResultGenerator.genFailResult("登陆失败，用户名或密码错误");
     }

@@ -1,6 +1,8 @@
 package com.honger1234.springbootprojectseed.util;
 
+import com.honger1234.springbootprojectseed.exception.TokenException;
 import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.ExpiredJwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
 import lombok.extern.slf4j.Slf4j;
@@ -27,7 +29,7 @@ public class JWTUtil {
     public static String generate(String uid,String subject) {
         Date nowDate = new Date();
         //过期时间
-        Date expireDate = new Date(nowDate.getTime() + EXPIRE * 1000);
+        Date expireDate = new Date(nowDate.getTime() + EXPIRE * 60*1000);
 //        Map<String, Object> claims = new HashMap<>(1);
 //        claims.put("id", uid);
         return Jwts.builder()
@@ -55,7 +57,7 @@ public class JWTUtil {
                     .getBody();
         } catch (Exception e) {
             log.error("token解析错误", e);
-            throw new IllegalArgumentException("Token invalided.");
+            throw new TokenException("无效的token");
         }
         return claims;
     }
@@ -89,8 +91,12 @@ public class JWTUtil {
      * @return true:过期   false:没过期
      */
     public static boolean isExpired(String token) {
+        try {
             Date expiration = getExpiration(token);
             return expiration.before(new Date());
+        } catch (ExpiredJwtException expiredJwtException) {
+            return true;
+        }
     }
 
 }

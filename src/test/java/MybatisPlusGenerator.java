@@ -2,12 +2,10 @@ import com.baomidou.mybatisplus.annotation.DbType;
 import com.baomidou.mybatisplus.annotation.FieldFill;
 import com.baomidou.mybatisplus.annotation.IdType;
 import com.baomidou.mybatisplus.generator.AutoGenerator;
-import com.baomidou.mybatisplus.generator.config.DataSourceConfig;
-import com.baomidou.mybatisplus.generator.config.GlobalConfig;
-import com.baomidou.mybatisplus.generator.config.PackageConfig;
-import com.baomidou.mybatisplus.generator.config.StrategyConfig;
+import com.baomidou.mybatisplus.generator.config.*;
 import com.baomidou.mybatisplus.generator.config.po.TableFill;
 import com.baomidou.mybatisplus.generator.config.rules.NamingStrategy;
+import com.baomidou.mybatisplus.generator.engine.FreemarkerTemplateEngine;
 
 import java.util.ArrayList;
 
@@ -28,7 +26,7 @@ public class MybatisPlusGenerator {
 
     //生成的文件路径配置
 //    private static final String OUTPUTDIR = System.getProperty("user.dir")+ "/src/main/java";//文件生成的基本路径
-    private static final String OUTPUTDIR = "D:\\zt\\idea-workspace\\spring-boot-project-seed\\src\\main\\java";//文件生成的基本路径
+    private static final String OUTPUTDIR = "F:\\idea-workspace\\spring-boot-project-seed\\src\\main\\java";//文件生成的基本路径
     private static final String PACKAGE_PARENT ="com.honger1234.springbootprojectseed";//生成的父包名
     private static final String PACKAGE_ENTITY ="entity";//生成的实体类的包路径，最终为PACKAGE_PARENT+PACKAGE_ENTITY
     private static final String PACKAGE_CONTROLLER ="controller";//生成的controller包路径，最终为PACKAGE_PARENT+PACKAGE_CONTROLLER
@@ -48,7 +46,7 @@ public class MybatisPlusGenerator {
                     .setAuthor(AUTHOR)//作者
                     .setOpen(false)
                     .setOutputDir(OUTPUTDIR)//生成目录
-                    .setFileOverride(false)//文件覆盖
+                    .setFileOverride(true)//文件覆盖
                     .setIdType(IdType.AUTO)//主键策略
                     //自定义文件命名，注意 %s 会自动填充表实体属性！
 //                   // 设置生成的service接口的名字的首字母是否为I，默认Service是以I开头的
@@ -89,6 +87,12 @@ public class MybatisPlusGenerator {
                      .setController(PACKAGE_CONTROLLER)
                      .setEntity(PACKAGE_ENTITY)
                      .setXml(PACKAGE_XML);
+        //自定义代码模板
+        TemplateConfig templateConfig = new TemplateConfig();
+        templateConfig.setController("templates/controller2.java");
+        templateConfig.setService("templates/service2.java");
+        templateConfig.setServiceImpl("templates/serviceImpl2.java");
+
         //整合配置
         AutoGenerator autoGenerator=new AutoGenerator();
 
@@ -96,13 +100,15 @@ public class MybatisPlusGenerator {
         autoGenerator.setDataSource(dataSourceConfig);
         autoGenerator.setStrategy(strategyConfig);
         autoGenerator.setPackageInfo(packageConfig);
+        autoGenerator.setTemplateEngine(new FreemarkerTemplateEngine());
+        autoGenerator.setTemplate(templateConfig);
 
         //执行
         autoGenerator.execute();
     }
 
     public static void main(String[] args) {
-        String tableName="tb_employee";
+        String tableName="tb_product";
         codeGenerator(tableName);
 //        System.out.println(System.getProperty("user.dir"));
     }
